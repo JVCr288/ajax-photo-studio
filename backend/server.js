@@ -99,7 +99,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
 });
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 
 app.get('/', (req, res) => {
     res.send('Ajax Click Photo Studio LAB — Payment & Generation Server is running. ✅');
@@ -194,9 +194,15 @@ app.get('/api/user/:userId/credits', (req, res) => {
 //  also enforces the credit system — nobody can generate images
 //  for free just by reading the frontend's source code anymore.
 // ============================================================
+// Only these two are allowed — never trust a model string from the client directly.
+const ALLOWED_MODELS = {
+    'black-forest-labs/FLUX.2-pro': { creditCost: CREDIT_COST_PER_IMAGE, label: 'Black Forest 2.0' },
+    'black-forest-labs/FLUX.2-max': { creditCost: Math.round(CREDIT_COST_PER_IMAGE * 1.5), label: 'Black Forest 3.0' }
+};
+
 app.post('/api/generate-image', async (req, res) => {
     try {
-        const { userId, prompt, aspectRatio } = req.body;
+        const { userId, prompt, aspectRatio, model, referenceImages } = req.body;
         if (!userId || !prompt) {
             return res.status(400).json({ error: 'Missing userId or prompt' });
         }
@@ -204,11 +210,28 @@ app.post('/api/generate-image', async (req, res) => {
             return res.status(500).json({ error: 'Server is missing TOGETHER_API_KEY. Ask the developer to configure it.' });
         }
 
+        const chosenModel = ALLOWED_MODELS[model] ? model : 'black-forest-labs/FLUX.2-pro';
+        const cost = ALLOWED_MODELS[chosenModel].creditCost;
+
         const db = loadDB();
         const user = getUser(db, userId);
 
-        if (user.credits < CREDIT_COST_PER_IMAGE) {
-            return res.status(402).json({ error: 'Not enough credits', credits: user.credits, required: CREDIT_COST_PER_IMAGE });
+        if (user.credits < cost) {
+            return res.status(402).json({ error: 'Not enough credits', credits: user.credits, required: cost });
+        }
+
+        const requestBody = {
+            model: chosenModel,
+            prompt,
+            aspect_ratio: aspectRatio || '16:9',
+            n: 1,
+            response_format: 'url'
+        };
+
+        // FLUX.2 supports up to 10 real reference images for identity/outfit
+        // preservation — this is far more accurate than a text description alone.
+        if (Array.isArray(referenceImages) && referenceImages.length > 0) {
+            requestBody.reference_images = referenceImages.slice(0, 10);
         }
 
         const response = await fetch('https://api.together.xyz/v1/images/generations', {
@@ -217,13 +240,7 @@ app.post('/api/generate-image', async (req, res) => {
                 'Authorization': `Bearer ${TOGETHER_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                model: 'black-forest-labs/FLUX.2-pro',
-                prompt,
-                aspect_ratio: aspectRatio || '16:9',
-                n: 1,
-                response_format: 'url'
-            })
+            body: JSON.stringify(requestBody)
         });
 
         if (!response.ok) {
@@ -239,10 +256,10 @@ app.post('/api/generate-image', async (req, res) => {
         }
 
         // Only deduct credits AFTER a successful generation.
-        user.credits -= CREDIT_COST_PER_IMAGE;
+        user.credits -= cost;
         saveDB(db);
 
-        res.json({ imageUrl, creditsRemaining: user.credits, creditsUsed: CREDIT_COST_PER_IMAGE });
+        res.json({ imageUrl, creditsRemaining: user.credits, creditsUsed: cost });
     } catch (err) {
         console.error('generate-image error:', err.message);
         res.status(500).json({ error: err.message });
