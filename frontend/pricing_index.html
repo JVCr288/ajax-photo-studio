@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ajax Click Photo Studio LAB Pro – Pricing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0b1120;
+            --bg-card: #172033;
+            --bg-card-hover: #1e2a44;
+            --border-color: #2a3a5e;
+            --text-primary: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --shadow-glow: rgba(59, 130, 246, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .header .logo-icon {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
+            padding: 10px;
+            border-radius: 14px;
+            font-size: 28px;
+            -webkit-text-fill-color: white;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+        }
+
+        .header h1 {
+            font-size: 38px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .bilingual-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* Credit Display */
+        .credit-display {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 32px;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .credit-display .label {
+            color: var(--text-muted);
+        }
+
+        .credit-display .amount {
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--accent-green);
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px 20px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 60px -10px var(--shadow-glow);
+            background: var(--bg-card-hover);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--accent-orange);
+            background: linear-gradient(145deg, #1a2a3a, #172033);
+            transform: scale(1.02);
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.02) translateY(-8px);
+            box-shadow: 0 20px 60px -10px rgba(245, 158, 11, 0.3);
+        }
+
+        .pricing-card.free-plan {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .pricing-card.free-plan:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 20px 60px -10px rgba(16, 185, 129, 0.2);
+        }
+
+        .badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-popular {
+            background: linear-gradient(135deg, var(--accent-orange), #d97706);
+            color: white;
+        }
+
+        .badge-free {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .plan-header {
+            margin-bottom: 20px;
+        }
+
+        .plan-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .plan-icon {
+            font-size: 24px;
+        }
+
+        .plan-subtitle {
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .price-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .price-amount {
+            font-size: 38px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .price-amount .currency {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .price-period {
+            color: var(--text-muted);
+            font-size: 13px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .price-note {
+            font-size: 12px;
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        .price-note .discount {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-orange);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-left: 6px;
+        }
+
+        .validity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 6px 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .validity .highlight {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .features {
+            list-style: none;
+            flex: 1;
+            margin: 16px 0 24px;
+        }
+
+        .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        .features .check {
+            color: var(--accent-green);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .features .check.disabled {
+            color: var(--border-color);
+        }
+
+        .btn-plan {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-green {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .btn-green:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, var(--accent-orange), #d97706);
+            color: white;
+        }
+
+        .btn-orange:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-top: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+
+        .faq-item h4 {
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: white;
+        }
+
+        .faq-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .faq-item p .en {
+            display: block;
+        }
+        .faq-item p .my {
+            display: block;
+            margin-top: 4px;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .pricing-card.popular {
+                transform: none;
+            }
+            .pricing-card.popular:hover {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <span class="logo-icon">📸</span>
+                <span>Ajax Click Photo Studio LAB Pro</span>
+            </div>
+            <h1>Choose Your Plan</h1>
+            <p>Flexible plans for every creator. Start for free, scale as you grow.</p>
+            <div class="bilingual-badge">
+                🌐 Bilingual Support • 🔒 Secure Payment
+            </div>
+            
+            <!-- Back to Studio Button -->
+            <div style="margin-top: 16px;">
+                <button onclick="window.location.href='main_UI_index-v4.html'" style="
+                    background: rgba(255,255,255,0.08);
+                    color: var(--text);
+                    border: 1px solid var(--border-color);
+                    padding: 8px 20px;
+                    border-radius: 30px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.85em;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+                    ⬅️ Back to Studio
+                </button>
+            </div>
+        </div>
+
+        <!-- CREDIT DISPLAY -->
+        <div class="credit-display">
+            <span class="label">💳 Your Credits</span>
+            <span class="amount" id="creditDisplay">0</span>
+        </div>
+
+        <!-- PRICING GRID -->
+        <div class="pricing-grid">
+
+            <!-- FREE PLAN -->
+            <div class="pricing-card free-plan">
+                <div class="badge badge-free">FREE</div>
+                <div class="plan-header">
+                    <div class="plan-name">
+                        <span class="plan-icon">🎁</span>
+                        <span>Free</span>
+                    </div>
+                    <div class="plan-subtitle">Try before you buy</div>
+                </div>
+                <div class="price-section">
+                    <div class="price-amount"><span class="currency">$</span>0.00</div>
+                    <div class="price-period">Forever free</div>
+                    <div class="validity">
+                        ⏳ <span>7 days validity</span>
+                    </div>
+                </div>
+
+                <ul class="features">
+                    <li><span class="check">✓</span> 150 Credits</li>
+                    <li><span class="check">✓</span> Black Forest LAB AI Model</li>
+                    <li><span class="check">✓</span> Reference Face ID</li>
+                    <li><span class="check">✓</span> Draw Things Server (MacOS)</li>
+                    <li><span class="check">✓</span> ChatGPT / Gemini Integration</li>
+                    <li><span class="check">✓</span> Traditional Costumes (20+ Countries)</li>
+                </ul>
+
+                <button class="btn-plan btn-green" onclick="purchasePlan('free')">
+                    🚀 Start Free
+                </button>
+            </div>
+
+            <!-- ESSENTIAL PLAN -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">
+                        <span class="plan-icon">💎</span>
+                        <span>Essential</span>
+                    </div>
+                    <div class="plan-subtitle">Start experimenting with the magic of AI creating</div>
+                </div>
+                <div class="price-section">
+                    <div class="price-amount"><span class="currency">$</span>3.50</div>
+                    <div class="price-period">One-time payment</div>
+                    <div class="validity">
+                        ⏳ <span>30 days validity</span>
+                    </div>
+                </div>
+
+                <ul class="features">
+                    <li><span class="check">✓</span> 1,500 Credits</li>
+                    <li><span class="check">✓</span> Black Forest LAB AI Model</li>
+                    <li><span class="check">✓</span> Reference Face ID</li>
+                    <li><span class="check">✓</span> Draw Things Server (MacOS)</li>
+                    <li><span class="check">✓</span> ChatGPT / Gemini Integration</li>
+                    <li><span class="check">✓</span> Traditional Costumes (20+ Countries)</li>
+                    <li><span class="check">✓</span> All Aspect Ratios</li>
+                </ul>
+
+                <button class="btn-plan btn-secondary" onclick="purchasePlan('essential')">
+                    🛒 Buy Now
+                </button>
+            </div>
+
+            <!-- ADVANCED PLAN (POPULAR) -->
+            <div class="pricing-card popular">
+                <div class="badge badge-popular">⭐ MOST POPULAR</div>
+                <div class="plan-header">
+                    <div class="plan-name">
+                        <span class="plan-icon">🔥</span>
+                        <span>Advanced</span>
+                    </div>
+                    <div class="plan-subtitle">Unlock deeper control and create at scale</div>
+                </div>
+                <div class="price-section">
+                    <div class="price-amount"><span class="currency">$</span>10.50</div>
+                    <div class="price-period">One-time payment</div>
+                    <div class="price-note"><span class="discount">🔥 20% OFF</span></div>
+                    <div class="validity">
+                        ⏳ <span>60 days validity</span>
+                    </div>
+                </div>
+
+                <ul class="features">
+                    <li><span class="check">✓</span> 4,500 Credits</li>
+                    <li><span class="check">✓</span> Black Forest LAB AI Model</li>
+                    <li><span class="check">✓</span> Reference Face ID</li>
+                    <li><span class="check">✓</span> Draw Things Server (MacOS)</li>
+                    <li><span class="check">✓</span> ChatGPT / Gemini Integration</li>
+                    <li><span class="check">✓</span> Traditional Costumes (20+ Countries)</li>
+                    <li><span class="check">✓</span> All Aspect Ratios</li>
+                    <li><span class="check">✓</span> Priority Support (Myanmar)</li>
+                </ul>
+
+                <button class="btn-plan btn-orange" onclick="purchasePlan('advanced')">
+                    ⚡ Buy Now
+                </button>
+            </div>
+
+            <!-- INFINITE PLAN -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">
+                        <span class="plan-icon">🚀</span>
+                        <span>Infinite</span>
+                    </div>
+                    <div class="plan-subtitle">Create at full speed with uninterrupted flow</div>
+                </div>
+                <div class="price-section">
+                    <div class="price-amount"><span class="currency">$</span>21.00</div>
+                    <div class="price-period">One-time payment</div>
+                    <div class="price-note"><span class="discount">🔥 20% OFF</span></div>
+                    <div class="validity">
+                        ⏳ <span>90 days validity</span>
+                    </div>
+                </div>
+
+                <ul class="features">
+                    <li><span class="check">✓</span> 9,000 Credits</li>
+                    <li><span class="check">✓</span> Black Forest LAB AI Model</li>
+                    <li><span class="check">✓</span> Reference Face ID</li>
+                    <li><span class="check">✓</span> Draw Things Server (MacOS)</li>
+                    <li><span class="check">✓</span> ChatGPT / Gemini Integration</li>
+                    <li><span class="check">✓</span> Traditional Costumes (20+ Countries)</li>
+                    <li><span class="check">✓</span> All Aspect Ratios</li>
+                    <li><span class="check">✓</span> Priority Support (Myanmar)</li>
+                    <li><span class="check">✓</span> API Access</li>
+                    <li><span class="check">✓</span> Team Sharing (Up to 2 Users)</li>
+                </ul>
+
+                <button class="btn-plan btn-primary" onclick="purchasePlan('infinite')">
+                    💼 Buy Now
+                </button>
+            </div>
+
+            <!-- WONDER PLAN -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">
+                        <span class="plan-icon">🌟</span>
+                        <span>Wonder</span>
+                    </div>
+                    <div class="plan-subtitle">Imagine without limits. Make your wonder.</div>
+                </div>
+                <div class="price-section">
+                    <div class="price-amount"><span class="currency">$</span>42.00</div>
+                    <div class="price-period">One-time payment</div>
+                    <div class="price-note"><span class="discount">🔥 20% OFF</span></div>
+                    <div class="validity">
+                        ⏳ <span>120 days validity</span>
+                    </div>
+                </div>
+
+                <ul class="features">
+                    <li><span class="check">✓</span> 18,000 Credits</li>
+                    <li><span class="check">✓</span> Black Forest LAB AI Model</li>
+                    <li><span class="check">✓</span> Reference Face ID (Unlimited)</li>
+                    <li><span class="check">✓</span> Draw Things Server (MacOS)</li>
+                    <li><span class="check">✓</span> ChatGPT / Gemini Integration</li>
+                    <li><span class="check">✓</span> Traditional Costumes (20+ Countries)</li>
+                    <li><span class="check">✓</span> All Aspect Ratios</li>
+                    <li><span class="check">✓</span> Priority Support (Myanmar)</li>
+                    <li><span class="check">✓</span> API Access</li>
+                    <li><span class="check">✓</span> Team Sharing (Up to 2 Users)</li>
+                    <li><span class="check">✓</span> 24/7 Premium Support</li>
+                </ul>
+
+                <button class="btn-plan btn-primary" onclick="purchasePlan('wonder')">
+                    ✨ Buy Now
+                </button>
+            </div>
+
+        </div>
+
+        <!-- FAQ SECTION -->
+        <div class="faq-section">
+            <h2>❓ Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>🎁 Can I try before buying?</h4>
+                    <p>
+                        <span class="en">Yes! The Free plan gives you 150 credits to test the AI Studio.</span>
+                        <span class="my">ဟုတ်ကဲ့! Free Plan က 150 Credits ပေးပြီး AI Studio ကို စမ်းသုံးခွင့်ပေးပါတယ်။</span>
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h4>⏳ What happens when validity expires?</h4>
+                    <p>
+                        <span class="en">Unused credits will be removed. We'll send a reminder 3 days before expiry.</span>
+                        <span class="my">မသုံးရသေးတဲ့ Credit တွေ ပျောက်သွားမယ်။ ကုန်ခါနီး ၃ ရက်အလိုမှာ သတိပေးမယ်။</span>
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h4>💰 Payment methods?</h4>
+                    <p>
+                        <span class="en">We accept KPay, Wave, and AYA Pay.</span>
+                        <span class="my">KPay, Wave နဲ့ AYA Pay တို့ဖြင့် ပေးချေနိုင်ပါတယ်။</span>
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h4>🔄 Can I upgrade my plan?</h4>
+                    <p>
+                        <span class="en">Yes, you can purchase a higher plan anytime. Credits from the old plan remain valid.</span>
+                        <span class="my">ဟုတ်ကဲ့။ အချိန်မရွေး ပိုကြီးတဲ့ Plan ကိုဝယ်လို့ရပါတယ်။ အဟောင်းက Credit တွေ ဆက်ရှိနေမယ်။</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px; padding: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 14px;">
+            © 2025 Ajax Click Photo Studio LAB Pro. Made with ❤️ for Myanmar & Global Creators.
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        //  FRONTEND LOGIC
+        // =============================================
+
+        // ⚠️ EDIT THIS after you deploy the backend (see backend/README.md)
+        // Example: 'https://ajax-click-payment.onrender.com'
+        const BACKEND_URL = 'http://localhost:5000';
+
+        function getUserId() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) {
+                userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+                localStorage.setItem('userId', userId);
+            }
+            return userId;
+        }
+
+        // Credits now live on the SERVER (so they can't be edited from
+        // DevTools). This fetches the real balance and caches it locally
+        // just so the number shows instantly on next page load.
+        async function refreshUserCredits() {
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/user/${getUserId()}/credits`);
+                const data = await res.json();
+                if (typeof data.credits === 'number') {
+                    localStorage.setItem('userCredits', String(data.credits));
+                }
+            } catch (err) {
+                console.error('Could not refresh credits from server:', err);
+            }
+            updateCreditDisplay();
+        }
+
+        function getUserCredits() {
+            return parseInt(localStorage.getItem('userCredits')) || 0;
+        }
+
+        function updateCreditDisplay() {
+            const display = document.getElementById('creditDisplay');
+            if (display) {
+                display.textContent = getUserCredits();
+            }
+        }
+
+        async function purchasePlan(planKey) {
+            const PLANS = {
+                free: { credits: 150, price: 0.00, label: 'Free' },
+                essential: { credits: 1500, price: 3.50, label: 'Essential' },
+                advanced: { credits: 4500, price: 10.50, label: 'Advanced' },
+                infinite: { credits: 9000, price: 21.00, label: 'Infinite' },
+                wonder: { credits: 18000, price: 42.00, label: 'Wonder' }
+            };
+
+            const plan = PLANS[planKey];
+            if (!plan) {
+                alert('Invalid plan selected.');
+                return;
+            }
+
+            // Free Plan — granted by the server, once per account
+            if (planKey === 'free') {
+                try {
+                    const res = await fetch(`${BACKEND_URL}/api/user/${getUserId()}/claim-free`, { method: 'POST' });
+                    const data = await res.json();
+                    localStorage.setItem('userCredits', String(data.credits));
+                    updateCreditDisplay();
+                    alert(data.message ? `ℹ️ ${data.message}` : '✅ Free plan activated! You have 150 credits to test the AI Studio.');
+                } catch (err) {
+                    alert('❌ Could not reach the server: ' + err.message);
+                }
+                return;
+            }
+
+            // Paid Plans -> Backend (Stripe)
+            const userId = getUserId();
+
+            try {
+                const btns = document.querySelectorAll('.btn-plan');
+                btns.forEach(btn => btn.disabled = true);
+
+                const response = await fetch(`${BACKEND_URL}/api/payment/create-checkout-session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, planKey })
+                });
+
+                const data = await response.json();
+
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert('❌ Something went wrong. Please try again.');
+                }
+            } catch (error) {
+                console.error('Purchase error:', error);
+                alert('❌ Payment failed: ' + error.message + '\n(Could not reach the payment server — check BACKEND_URL)');
+            } finally {
+                const btns = document.querySelectorAll('.btn-plan');
+                btns.forEach(btn => btn.disabled = false);
+            }
+        }
+
+        async function handlePaymentSuccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+
+            if (sessionId) {
+                try {
+                    const response = await fetch(`${BACKEND_URL}/api/payment/check-session-status?sessionId=${sessionId}`);
+                    const data = await response.json();
+
+                    if (data.status === 'paid') {
+                        // The Stripe webhook usually credits the account within a
+                        // second or two; give it a brief moment before reading balance.
+                        await new Promise(r => setTimeout(r, 1500));
+                        await refreshUserCredits();
+                        alert('✅ Payment successful! Your credits have been added.');
+                    }
+                } catch (error) {
+                    console.error('Error checking payment status:', error);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshUserCredits();
+            if (window.location.pathname.includes('payment-success') || window.location.search.includes('session_id')) {
+                handlePaymentSuccess();
+            }
+        });
+
+        window.purchasePlan = purchasePlan;
+
+        // =============================================
+        //  ICON SWAPPER SYSTEM (Developer Mode)
+        // =============================================
+
+        (function() {
+            // URL မှာ ?dev=true ပါမှသာ Admin Tools ကိုပြမယ်
+            const urlParams = new URLSearchParams(window.location.search);
+            const isDevMode = urlParams.has('dev') && urlParams.get('dev') === 'true';
+
+            // Icon တွေရဲ့ သတ်မှတ်ချက် (ဆရာက ဒီနေရာမှာ ပုံလမ်းကြောင်းတွေ ထည့်ပါ)
+            const ICON_MAP = {
+                '📸': 'https://cdn-icons-png.flaticon.com/512/1046/1046784.png',
+                '🎁': 'https://cdn-icons-png.flaticon.com/512/905/905536.png',
+                '💎': 'https://cdn-icons-png.flaticon.com/512/660/660174.png',
+                '🔥': 'https://cdn-icons-png.flaticon.com/512/882/882433.png',
+                '🚀': 'https://cdn-icons-png.flaticon.com/512/3095/3095206.png',
+                '⭐': 'https://cdn-icons-png.flaticon.com/512/182/182888.png',
+                '💳': 'https://cdn-icons-png.flaticon.com/512/1533/1533890.png',
+                '⏳': 'https://cdn-icons-png.flaticon.com/512/3298/3298211.png',
+                '🛒': 'https://cdn-icons-png.flaticon.com/512/107/107831.png',
+                '⚡': 'https://cdn-icons-png.flaticon.com/512/348/348164.png',
+                '💼': 'https://cdn-icons-png.flaticon.com/512/3135/3135746.png',
+                '🌟': 'https://cdn-icons-png.flaticon.com/512/1063/1063252.png',
+                '🌐': 'https://cdn-icons-png.flaticon.com/512/352/352881.png',
+                '🔒': 'https://cdn-icons-png.flaticon.com/512/1533/1533912.png',
+                '❓': 'https://cdn-icons-png.flaticon.com/512/3867/3867803.png',
+            };
+
+            const currentMode = localStorage.getItem('iconMode') || 'emoji';
+
+            function applyIconMode(mode) {
+                const allElements = document.querySelectorAll('.plan-icon, .logo-icon, .badge, .credit-display .label, .validity, .price-note, .btn-plan');
+                
+                allElements.forEach(el => {
+                    const text = el.textContent || '';
+                    const emojiMatch = text.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{2700}-\u{27BF}]|[✈✉✊✋✌✍✎✏✐✑✒✓✔✕✖✗✘✙✚✛✜✝✞✟✠✡✢✣✤✥✦✧✨✩✪✫✬✭✮✯✰✱✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀❁❂❃❄❅❆❇❈❉❊❋❌❍❎❏❐❑❒❓❔❕❖❗❘❙❚❛❜❝❞❟❠❡❢❣❤❥❦❧❨❩❪❫❬❭❮❯❰❱❲❳❴❵➔➕➖➗➘➙➚➛➜➝➞➟➠➡➢➣➤➥➦➧➨➩➪➫➬➭➮➯➰➱➲➳➴➵➶➷➸➹➺➻➼➽➾➿])/u);
+                    if (!emojiMatch) return;
+
+                    const emoji = emojiMatch[0];
+                    if (mode === 'image' && ICON_MAP[emoji]) {
+                        const img = document.createElement('img');
+                        img.src = ICON_MAP[emoji];
+                        img.alt = emoji;
+                        img.style.cssText = 'width:22px;height:22px;display:inline-block;vertical-align:middle;margin-right:4px;';
+                        el.replaceChild(img, el.childNodes[0]);
+                    }
+                });
+                localStorage.setItem('iconMode', mode);
+            }
+
+            // Admin Tools UI (Dev Mode)
+            if (isDevMode) {
+                const adminDiv = document.createElement('div');
+                adminDiv.style.cssText = `
+                    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+                    background: #1e293b; color: white; padding: 15px 20px;
+                    border-radius: 16px; border: 2px solid #3b82f6;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+                    font-family: sans-serif; font-size: 14px;
+                    max-width: 280px;
+                `;
+                adminDiv.innerHTML = `
+                    <div style="display:flex;flex-direction:column;gap:10px;align-items:center;">
+                        <strong style="color:#60a5fa;">🛠️ Admin Icon Swapper</strong>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                            <button id="setEmojiBtn" style="padding:6px 14px;border-radius:8px;border:none;cursor:pointer;background:#475569;color:white;">🔤 Emoji</button>
+                            <button id="setImageBtn" style="padding:6px 14px;border-radius:8px;border:none;cursor:pointer;background:#3b82f6;color:white;">🖼️ My Icons</button>
+                        </div>
+                        <small style="color:#94a3b8;">Current: ${currentMode}</small>
+                        <small style="color:#f87171;">*Launch မလုပ်ခင် ဖယ်ပါ</small>
+                    </div>
+                `;
+                document.body.appendChild(adminDiv);
+
+                document.getElementById('setEmojiBtn').addEventListener('click', function() {
+                    if (confirm('Emoji ပုံစံပြန်သွားမှာပါ။ စာမျက်နှာ ပြန်လည်ဆန်းသစ်မည်။')) {
+                        localStorage.setItem('iconMode', 'emoji');
+                        location.reload();
+                    }
+                });
+
+                document.getElementById('setImageBtn').addEventListener('click', function() {
+                    applyIconMode('image');
+                    alert('✅ Icon တွေကို ဆရာ့ပုံတွေနဲ့ အစားထိုးပြီးပါပြီ။');
+                });
+            }
+
+            if (currentMode === 'image') {
+                window.addEventListener('DOMContentLoaded', function() {
+                    applyIconMode('image');
+                });
+            }
+
+        })();
+    </script>
+
+</body>
+</html>
